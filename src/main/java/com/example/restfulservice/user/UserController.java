@@ -24,8 +24,17 @@ public class UserController {
     //Get /users/1 or /users/10 -> String 형태로 변수가 전달됨, 타입을 지정함으로써 자동으러 컨버팅 됨
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable int id){
-        return service.findOne(id);
+        User user = service.findOne(id);
+        
+        if (user == null) {
+            // 오류 발생시킴
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        
+        return user;
     }
+
+
     @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = service.save(user);
@@ -37,5 +46,13 @@ public class UserController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        User user = service.deleteById(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
     }
 }
