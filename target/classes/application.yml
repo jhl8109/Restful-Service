@@ -8,3 +8,7 @@ logging:
 spring:
   messages:
     basename: messages
+
+springdoc:
+  packages-to-scan: package1,package2
+  paths-to-match: /v1, /api/balance/**
