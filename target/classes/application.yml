@@ -8,6 +8,12 @@ logging:
 spring:
   messages:
     basename: messages
+  security:
+    user:
+      name: username
+      password: passw0rd
+  main:
+    allow-bean-definition-overriding: true
 
 springdoc:
   packages-to-scan: package1,package2
@@ -18,3 +24,4 @@ management:
     web:
       exposure:
         include: "*"
+
